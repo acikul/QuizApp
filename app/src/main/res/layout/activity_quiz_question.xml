@@ -61,6 +61,69 @@
                 />
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/option_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:background="@drawable/default_option_border_bg"
+            android:gravity="center"
+            android:padding="15dp"
+            android:textColor="@color/design_default_color_primary"
+            android:textSize="18sp"
+            tools:text = "Option 1"
+            />
+
+        <TextView
+            android:id="@+id/option_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:background="@drawable/default_option_border_bg"
+            android:gravity="center"
+            android:padding="15dp"
+            android:textColor="@color/design_default_color_primary"
+            android:textSize="18sp"
+            tools:text = "Option 2"
+            />
+
+        <TextView
+            android:id="@+id/option_3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:background="@drawable/default_option_border_bg"
+            android:gravity="center"
+            android:padding="15dp"
+            android:textColor="@color/design_default_color_primary"
+            android:textSize="18sp"
+            tools:text = "Option 3"
+            />
+
+        <TextView
+            android:id="@+id/option_4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:background="@drawable/default_option_border_bg"
+            android:gravity="center"
+            android:padding="15dp"
+            android:textColor="@color/design_default_color_primary"
+            android:textSize="18sp"
+            tools:text = "Option 4"
+            />
+
+        <Button
+            android:id="@+id/submit_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:backgroundTint="@color/design_default_color_primary_variant"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:text="@string/submit"
+            />
+
     </LinearLayout>
 
 </ScrollView>

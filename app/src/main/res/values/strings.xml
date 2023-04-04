@@ -5,4 +5,5 @@
     <string name="welcome">Welcome</string>
     <string name="start">START</string>
     <string name="quiz_image_showing_a_flag">Quiz image showing a flag.</string>
+    <string name="submit">SUBMIT</string>
 </resources>
