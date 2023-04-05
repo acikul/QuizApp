@@ -3,10 +3,7 @@ package udemy.course.quizapp
 import android.graphics.Typeface
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import udemy.course.quizapp.models.Constants
@@ -34,6 +31,14 @@ class QuizQuestionActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_quiz_question)
 
+        findEverythingById()
+        setOnClickListeners()
+
+        questionList = Constants.getQuestions()
+        loadQuestion()
+    }
+
+    private fun findEverythingById() {
         questionText = findViewById(R.id.question_text)
         questionImage = findViewById(R.id.question_image)
 
@@ -45,20 +50,21 @@ class QuizQuestionActivity : AppCompatActivity(), View.OnClickListener {
         option3 = findViewById(R.id.option_3)
         option4 = findViewById(R.id.option_4)
 
+        submitButton = findViewById(R.id.submit_btn)
+    }
+
+    private fun setOnClickListeners() {
         option1?.setOnClickListener(this)
         option2?.setOnClickListener(this)
         option3?.setOnClickListener(this)
         option4?.setOnClickListener(this)
-
-        submitButton = findViewById(R.id.submit_btn)
         submitButton?.setOnClickListener(this)
-
-        questionList = Constants.getQuestions()
-        setQuestion()
     }
 
-    private fun setQuestion() {
-        currentPosition = 1
+    private fun loadQuestion() {
+        currentSelection = null
+        clearOptionSelection()
+
         val question = questionList!!.get(currentPosition - 1)
 
         questionText?.text = question.questionText
@@ -74,10 +80,19 @@ class QuizQuestionActivity : AppCompatActivity(), View.OnClickListener {
 
         if (currentPosition == questionList!!.size) {
             submitButton?.text = "FINISH"
+        } else {
+            submitButton?.text = "SUBMIT"
         }
     }
 
-    private fun resetSelection() {
+    private fun optionSelected(optionTextView: TextView, selectedOptionId: Int) {
+        clearOptionSelection()
+        currentSelection = selectedOptionId
+        optionTextView.setTypeface(optionTextView.typeface, Typeface.BOLD)
+        optionTextView.background = ContextCompat.getDrawable(this, R.drawable.selected_option_border_bg)
+    }
+
+    private fun clearOptionSelection() {
         val options = ArrayList<TextView>()
         option1?.let { options.add(it) }
         option2?.let { options.add(it) }
@@ -90,22 +105,41 @@ class QuizQuestionActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    private fun selectedOption(optionTextView: TextView, selectedOptionId: Int) {
-        resetSelection()
-        currentSelection = selectedOptionId
-        optionTextView.setTypeface(optionTextView.typeface, Typeface.BOLD)
-        optionTextView.background = ContextCompat.getDrawable(this, R.drawable.selected_option_border_bg)
+    private fun answerCheckAndColor(answer: Int, drawableTextView: Int) {
+        when (answer) {
+            1 -> option1?.background = ContextCompat.getDrawable(this, drawableTextView)
+            2 -> option2?.background = ContextCompat.getDrawable(this, drawableTextView)
+            3 -> option3?.background = ContextCompat.getDrawable(this, drawableTextView)
+            4 -> option4?.background = ContextCompat.getDrawable(this, drawableTextView)
+        }
     }
 
     override fun onClick(view: View?) {
         when (view?.id) {
-            R.id.option_1 -> { option1?.let { selectedOption(it, 1) } }
-            R.id.option_2 -> { option2?.let { selectedOption(it, 2) } }
-            R.id.option_3 -> { option3?.let { selectedOption(it, 3) } }
-            R.id.option_4 -> { option4?.let { selectedOption(it, 4) } }
+            R.id.option_1 -> { if (currentSelection != Int.MAX_VALUE) option1?.let { optionSelected(it, 1) } }
+            R.id.option_2 -> { if (currentSelection != Int.MAX_VALUE) option2?.let { optionSelected(it, 2) } }
+            R.id.option_3 -> { if (currentSelection != Int.MAX_VALUE) option3?.let { optionSelected(it, 3) } }
+            R.id.option_4 -> { if (currentSelection != Int.MAX_VALUE) option4?.let { optionSelected(it, 4) } }
 
             R.id.submit_btn -> {
-                // TODO implement submit button
+                if (currentSelection == null) {
+                    Toast.makeText(this, "Please select an answer before submitting", Toast.LENGTH_LONG).show()
+                } else if (currentSelection == Int.MAX_VALUE) {
+                    if (currentPosition < questionList!!.size) {
+                        currentPosition++
+                        loadQuestion()
+                    } else {
+                        Toast.makeText(this, "This is the end of the quiz", Toast.LENGTH_LONG).show()
+                    }
+                } else {
+                    val question = questionList?.get(currentPosition - 1)
+                    if (question?.answer != currentSelection) {
+                        answerCheckAndColor(currentSelection!!, R.drawable.incorrect_option_border_bg)
+                    }
+                    answerCheckAndColor(question?.answer!!, R.drawable.correct_option_border_bg)
+                    currentSelection = Int.MAX_VALUE
+                    submitButton?.text = "NEXT QUESTION"
+                }
             }
         }
     }

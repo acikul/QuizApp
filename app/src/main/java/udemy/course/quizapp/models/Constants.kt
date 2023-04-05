@@ -26,7 +26,7 @@ object Constants {
             "Honduras",
             "United Kingdom",
             "Bolivia",
-            3
+            1
         )
 
         val q3 = Question(
