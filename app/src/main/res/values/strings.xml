@@ -6,4 +6,7 @@
     <string name="start">START</string>
     <string name="quiz_image_showing_a_flag">Quiz image showing a flag.</string>
     <string name="submit">SUBMIT</string>
+    <string name="trophy_image_description">Trophy image</string>
+    <string name="result">Result</string>
+    <string name="success">Success!</string>
 </resources>
