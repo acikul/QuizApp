@@ -9,4 +9,7 @@
     <string name="trophy_image_description">Trophy image</string>
     <string name="result">Result</string>
     <string name="success">Success!</string>
+    <string name="username">username</string>
+    <string name="you_scored_9_10">You scored 9/10</string>
+    <string name="done">DONE</string>
 </resources>
