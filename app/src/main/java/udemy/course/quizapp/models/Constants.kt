@@ -4,6 +4,10 @@ import udemy.course.quizapp.R
 
 object Constants {
 
+    const val USER_NAME = "user_name"
+    const val NUM_QUESTIONS = "num_questions"
+    const val NUM_CORRECT = "num_correct"
+
     fun getQuestions(): ArrayList<Question> {
         val questionList = ArrayList<Question>()
 

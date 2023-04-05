@@ -1,5 +1,6 @@
 package udemy.course.quizapp
 
+import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
 import android.view.View
@@ -10,6 +11,9 @@ import udemy.course.quizapp.models.Constants
 import udemy.course.quizapp.models.Question
 
 class QuizQuestionActivity : AppCompatActivity(), View.OnClickListener {
+    private var userName: String? = null
+    private var correctNum: Int = 0
+
     private var currentPosition = 1
     private var questionList: ArrayList<Question>? = null
     private var currentSelection: Int? = null
@@ -30,6 +34,9 @@ class QuizQuestionActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_quiz_question)
+
+        userName = intent.getStringExtra(Constants.USER_NAME)
+        correctNum = 0
 
         findEverythingById()
         setOnClickListeners()
@@ -129,16 +136,23 @@ class QuizQuestionActivity : AppCompatActivity(), View.OnClickListener {
                         currentPosition++
                         loadQuestion()
                     } else {
-                        Toast.makeText(this, "This is the end of the quiz", Toast.LENGTH_LONG).show()
+                        val resultIntent = Intent(this, ResultActivity::class.java)
+                        resultIntent.putExtra(Constants.USER_NAME, userName)
+                        resultIntent.putExtra(Constants.NUM_QUESTIONS, questionList?.size)
+                        resultIntent.putExtra(Constants.NUM_CORRECT, correctNum)
+                        startActivity(resultIntent)
+                        finish()
                     }
                 } else {
                     val question = questionList?.get(currentPosition - 1)
                     if (question?.answer != currentSelection) {
                         answerCheckAndColor(currentSelection!!, R.drawable.incorrect_option_border_bg)
+                    } else {
+                        correctNum++
                     }
                     answerCheckAndColor(question?.answer!!, R.drawable.correct_option_border_bg)
                     currentSelection = Int.MAX_VALUE
-                    submitButton?.text = "NEXT QUESTION"
+                    submitButton?.text = if (currentPosition != questionList!!.size) "NEXT QUESTION" else "FINISH"
                 }
             }
         }

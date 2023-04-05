@@ -6,6 +6,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import udemy.course.quizapp.models.Constants
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,9 +20,10 @@ class MainActivity : AppCompatActivity() {
             if (nameInput.text.isEmpty()) {
                 Toast.makeText(this, "You haven't entered your name", Toast.LENGTH_LONG).show()
             } else {
-                val intent = Intent(this, QuizQuestionActivity::class.java)
-                startActivity(intent)
-                // finish()
+                val questionsIntent = Intent(this, QuizQuestionActivity::class.java)
+                questionsIntent.putExtra(Constants.USER_NAME, nameInput.text.toString())
+                startActivity(questionsIntent)
+                finish()
             }
         }
 

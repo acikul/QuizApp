@@ -45,7 +45,8 @@
         android:layout_marginTop="25dp"
         android:text="@string/username"
         android:textColor="@color/white"
-        android:textSize="25sp"
+        android:textSize="22sp"
+        android:textStyle="bold"
         />
 
     <TextView
@@ -56,9 +57,11 @@
         android:text="@string/you_scored_9_10"
         android:textColor="@color/design_default_color_secondary"
         android:textSize="20sp"
+        android:textStyle="bold"
         />
 
     <Button
+        android:id="@+id/done_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
